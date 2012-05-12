@@ -1,3 +1,10 @@
+"""This is essentially a glorified "find . -name \*.pyc -exec rm -f {} \;"
+except that since it's in python should work on any platform and I can just
+add it to the list of default packages that get installed in my virtual
+environments and know it will always be there whenever I'm using python.
+
+"""
+
 import logging
 import argparse
 import glob
