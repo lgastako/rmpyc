@@ -6,13 +6,22 @@ import os
 isdir = os.path.isdir
 
 
+def safe_listdir(dir_):
+    # To avoid permission denied, etc.
+    try:
+        return os.listdir(dir_)
+    except:
+        return []
+
+
 def rmpyc_dir(options, dir_):
     fn_glob = os.path.join(dir_, options.glob)
     for pyc_file in glob.glob(fn_glob):
         os.remove(pyc_file)
     if options.recurse:
-        paths = [os.path.join(dir_, fn) for fn in os.listdir(dir_)]
-        return filter(isdir, paths)
+        paths = [os.path.join(dir_, fn) for fn in safe_listdir(dir_)]
+        new_dirs = filter(isdir, paths)
+        return new_dirs
 
 
 def rmpyc(options):
